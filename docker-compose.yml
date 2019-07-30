@@ -11,6 +11,7 @@ services:
       - MYSQL_USER=mygetzu
       - MYSQL_PASSWORD=P@ssw0rd|mysql
       - MYSQL_DATABASE=ooe_nabati
+      - MYSQL_ROOT_PASSWORD=P@ssw0rd|mysql
     restart: always
   backend:
     container_name: oee-nabati-backend
