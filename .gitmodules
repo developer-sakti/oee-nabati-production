@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/developer-sakti/oee-nabati-backend.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/developer-sakti/oee-nabati-frontend.git
