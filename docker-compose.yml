@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  database:
+    container_name: oee-nabati-database
+    image: mariadb:latest
+    environment:
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=3306
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER=mygetzu
+      - MYSQL_PASSWORD=P@ssw0rd|mysql
+      - MYSQL_DATABASE=ooe_nabati
+    restart: always
+  backend:
+    container_name: oee-nabati-backend
+    links:
+      - database
+    depends_on:
+      - database
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    restart: always
+  frontend:
+    container_name: oee-nabati-frontend
+    depends_on:
+      - backend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: always
