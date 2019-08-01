@@ -1,6 +1,19 @@
 version: '3.7'
 
 services:
+  webserver:
+    container_name: oee-nabati-webserver
+    image: nginx:stable-alpine
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./config/nginx-gate:/etc/nginx/conf.d"
+      - "./log/nginx-gate:/var/log/nginx"
+    depends_on:
+      - backend
+    links:
+      - backend
+    restart: always
   database:
     container_name: oee-nabati-database
     image: mariadb:latest
@@ -39,6 +52,8 @@ services:
     restart: always
   adminer:
     image: adminer
+    depends_on:
+      - database
     restart: always
     ports:
       - "8181:8080"
