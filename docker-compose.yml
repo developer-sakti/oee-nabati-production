@@ -7,8 +7,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - "./config/nginx-gate:/etc/nginx/conf.d"
-      - "./log/nginx-gate:/var/log/nginx"
+      - "./config/nginx:/etc/nginx/conf.d"
+      - "./log/nginx:/var/log/nginx"
     depends_on:
       - backend
     links:
