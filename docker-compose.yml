@@ -10,40 +10,13 @@ services:
       - "./config/nginx:/etc/nginx/conf.d"
       - "./log/nginx:/var/log/nginx"
     depends_on:
-      - backend
+      - frontend
     links:
-      - backend
+      - frontend
     restart: always
-  database:
-    container_name: oee-nabati-database
-    image: mariadb:latest
-    environment:
-      - MYSQL_HOST=localhost
-      - MYSQL_PORT=3306
-      - MYSQL_ROOT_HOST=%
-      - MYSQL_USER=mygetzu
-      - MYSQL_PASSWORD=P@ssw0rd|mysql
-      - MYSQL_DATABASE=ooe_nabati
-      - MYSQL_ROOT_PASSWORD=P@ssw0rd|mysql
-    restart: always
-  backend:
-    container_name: oee-nabati-backend
-    links:
-      - database
-    depends_on:
-      - database
+  frontend:
+    container_name: oee-nabati-frontend
     build:
-      context: ./backend
+      context: ./frontend
       dockerfile: Dockerfile
-    ports:
-      - "8081:8081"
-    expose:
-      - "8081"
     restart: always
-  adminer:
-    image: adminer
-    depends_on:
-      - database
-    restart: always
-    ports:
-      - "8181:8080"
