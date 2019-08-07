@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   webserver:
-    container_name: oee-nabati-webserver
+    container_name: oee-nabati-webserver-frontend
     image: nginx:stable-alpine
     ports:
       - "8080:80"
