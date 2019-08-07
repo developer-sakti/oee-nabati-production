@@ -2,10 +2,10 @@ version: '3.7'
 
 services:
   webserver:
-    container_name: oee-nabati-webserver
+    container_name: oee-nabati-webserver-backend
     image: nginx:stable-alpine
     ports:
-      - "80:80"
+      - "8081:80"
     volumes:
       - "./config/nginx:/etc/nginx/conf.d"
       - "./log/nginx:/var/log/nginx"
