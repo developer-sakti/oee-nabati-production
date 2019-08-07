@@ -5,7 +5,7 @@ services:
     container_name: oee-nabati-webserver
     image: nginx:stable-alpine
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - "./config/nginx:/etc/nginx/conf.d"
       - "./log/nginx:/var/log/nginx"
