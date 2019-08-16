@@ -5,7 +5,7 @@ services:
     container_name: oee-nabati-webserver-backend
     image: nginx:stable-alpine
     ports:
-      - "8081:80"
+      - "${BACKEND_PORT}:80"
     volumes:
       - "./config/nginx:/etc/nginx/conf.d"
       - "./log/nginx:/var/log/nginx"
@@ -21,10 +21,10 @@ services:
       - MYSQL_HOST=localhost
       - MYSQL_PORT=3306
       - MYSQL_ROOT_HOST=%
-      - MYSQL_USER=mygetzu
-      - MYSQL_PASSWORD=P@ssw0rd|mysql
-      - MYSQL_DATABASE=ooe_nabati
-      - MYSQL_ROOT_PASSWORD=P@ssw0rd|mysql
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     restart: always
   backend:
     container_name: oee-nabati-backend
@@ -35,6 +35,12 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      args:
+      - NODE_ENV=${MODE}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - BACKEND_PORT=${BACKEND_PORT}
     restart: always
   adminer:
     image: adminer
@@ -42,4 +48,4 @@ services:
       - database
     restart: always
     ports:
-      - "8181:8080"
+      - "${ADMINER_PORT}:8080"
