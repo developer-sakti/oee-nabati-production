@@ -64,6 +64,7 @@ services:
         - NODE_ENV=${MODE}
         - FRONTEND_PORT=${FRONTEND_PORT}
         - API_URL=${API_URL}
+    restart: always
   adminer:
     image: adminer
     depends_on:
