@@ -1,3 +1,4 @@
 [submodule "backend"]
 	path = backend
 	url = https://github.com/developer-sakti/oee-nabati-backend.git
+	branch = docker/production
