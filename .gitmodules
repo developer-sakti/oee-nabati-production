@@ -2,3 +2,7 @@
 	path = backend
 	url = https://github.com/developer-sakti/oee-nabati-backend.git
 	branch = docker/production
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/developer-sakti/oee-nabati-frontend.git
+	branch = docker/production
