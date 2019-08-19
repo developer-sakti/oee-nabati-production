@@ -6,3 +6,6 @@
 	path = frontend
 	url = https://github.com/developer-sakti/oee-nabati-frontend.git
 	branch = docker/production
+[submodule "tv"]
+	path = tv
+	url = https://github.com/developer-sakti/oee-nabati-tv.git
