@@ -27,6 +27,19 @@ services:
     links:
       - frontend
     restart: always
+  loadbalancer_tv:
+    container_name: oee-nabati-loadbalancer-frontend
+    image: nginx:stable-alpine
+    ports:
+      - "${TV_PORT}:80"
+    volumes:
+      - "./config/nginx-tv:/etc/nginx/conf.d"
+      - "./log/nginx-tv:/var/log/nginx"
+    depends_on:
+      - tv
+    links:
+      - tv
+    restart: always
   database:
     container_name: oee-nabati-database
     image: mariadb:latest
@@ -63,6 +76,16 @@ services:
       args:
         # - NODE_ENV=${MODE}
         - FRONTEND_PORT=${FRONTEND_PORT}
+        - API_URL=${API_URL}
+    restart: always
+  tv:
+    container_name: oee-nabati-tv
+    build:
+      context: ./tv
+      dockerfile: Dockerfile
+      args:
+        # - NODE_ENV=${MODE}
+        - TV_PORT=${TV_PORT}
         - API_URL=${API_URL}
     restart: always
   adminer:
