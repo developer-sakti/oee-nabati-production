@@ -28,7 +28,7 @@ services:
       - frontend
     restart: always
   loadbalancer_tv:
-    container_name: oee-nabati-loadbalancer-frontend
+    container_name: oee-nabati-loadbalancer-tv
     image: nginx:stable-alpine
     ports:
       - "${TV_PORT}:80"
