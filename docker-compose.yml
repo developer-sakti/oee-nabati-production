@@ -31,7 +31,7 @@ services:
     container_name: oee-nabati-loadbalancer-tv
     image: nginx:stable-alpine
     ports:
-      - "3001:80"
+      - "${TV_PORT}:80"
     volumes:
       - "./config/nginx-tv:/etc/nginx/conf.d"
       - "./log/nginx-tv:/var/log/nginx"
