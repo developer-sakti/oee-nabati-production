@@ -51,6 +51,7 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - TZ=${TZ}
     restart: always
   backend:
     container_name: oee-nabati-backend
