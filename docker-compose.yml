@@ -43,6 +43,8 @@ services:
   database:
     container_name: oee-nabati-database
     image: mariadb:latest
+    volumes:
+      - "./config/mysql:/etc/mysql/conf.d"
     environment:
       - MYSQL_HOST=localhost
       - MYSQL_PORT=3306
