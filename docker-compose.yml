@@ -1,5 +1,8 @@
 version: '3.7'
 
+volumes:
+  dbdata:
+
 services:
   webserver:
     container_name: oee-nabati-webserver-backend
@@ -14,6 +17,7 @@ services:
     links:
       - backend
     restart: always
+
   loadbalancer:
     container_name: oee-nabati-loadbalancer-frontend
     image: nginx:stable-alpine
@@ -27,6 +31,7 @@ services:
     links:
       - frontend
     restart: always
+
   loadbalancer_tv:
     container_name: oee-nabati-loadbalancer-tv
     image: nginx:stable-alpine
@@ -40,6 +45,7 @@ services:
     links:
       - tv
     restart: always
+
   database:
     container_name: oee-nabati-database
     image: mariadb:latest
@@ -55,6 +61,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - TZ=${TZ}
     restart: always
+
   backend:
     container_name: oee-nabati-backend
     links:
@@ -71,6 +78,7 @@ services:
       - DB_NAME=${DB_NAME}
       - BACKEND_PORT=${BACKEND_PORT}
     restart: always
+
   frontend:
     container_name: oee-nabati-frontend
     build:
@@ -81,6 +89,7 @@ services:
         - FRONTEND_PORT=${FRONTEND_PORT}
         - API_URL=${API_URL}
     restart: always
+
   tv:
     container_name: oee-nabati-tv
     build:
@@ -91,6 +100,7 @@ services:
         - TV_PORT=${TV_PORT}
         - API_URL=${API_URL}
     restart: always
+
   adminer:
     image: adminer
     depends_on:
@@ -98,3 +108,58 @@ services:
     restart: always
     ports:
       - "${ADMINER_PORT}:8080"
+  
+  api:
+    build:
+      context: ./apiserver
+      dockerfile: dev.dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./apiserver:/var/www
+    restart: always
+
+  web:
+    build:
+      context: ./
+      dockerfile: nginx-server.dockerfile
+    working_dir: /var/www
+    # volumes_from:
+    #   - api
+    ports:
+      - 8080:80
+
+  dbqc:
+    image: mariadb:10.4-bionic
+    volumes:
+      - dbdata:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=3306
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=qaqc
+      - MYSQL_PASSWORD=secret
+      - MYSQL_USER=homestead
+      - MYSQL_ROOT_PASSWORD=secret
+
+  mobile:
+    build:
+      context: ./mobilepage
+      dockerfile: mobile.dockerfile
+      args:
+        - NODE_ENV=production
+        - APISERVER_URL=http://${APISERVER_URL}:8080/
+    restart: always
+    ports:
+      - "8282:80"
+
+  dashboard:
+    build:
+      context: ./webpage
+      dockerfile: web.dockerfile
+      args:
+        - NODE_ENV=production
+        - APISERVER_URL=http://${APISERVER_URL}:8080
+    restart: always
+    ports:
+      - "80:80"
