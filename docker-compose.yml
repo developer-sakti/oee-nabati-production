@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 volumes:
   dbdata:
@@ -72,11 +72,11 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       args:
-      # - NODE_ENV=${MODE}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
-      - BACKEND_PORT=${BACKEND_PORT}
+        # - NODE_ENV=${MODE}
+        - DB_USER=${DB_USER}
+        - DB_PASSWORD=${DB_PASSWORD}
+        - DB_NAME=${DB_NAME}
+        - BACKEND_PORT=${BACKEND_PORT}
     restart: always
 
   frontend:
@@ -108,7 +108,7 @@ services:
     restart: always
     ports:
       - "${ADMINER_PORT}:8080"
-  
+
   api:
     build:
       context: ./apiserver
@@ -155,7 +155,7 @@ services:
 
   dashboard:
     build:
-      context: ./webpage
+      context: ./
       dockerfile: web.dockerfile
       args:
         - NODE_ENV=production
