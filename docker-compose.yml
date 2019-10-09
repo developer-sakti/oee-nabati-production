@@ -77,6 +77,8 @@ services:
         - DB_PASSWORD=${DB_PASSWORD}
         - DB_NAME=${DB_NAME}
         - BACKEND_PORT=${BACKEND_PORT}
+    environment:
+      - TZ=${TZ}
     restart: always
 
   frontend:
