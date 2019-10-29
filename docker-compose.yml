@@ -157,7 +157,7 @@ services:
 
   dashboard:
     build:
-      context: ./
+      context: ./webpage
       dockerfile: web.dockerfile
       args:
         - NODE_ENV=production
