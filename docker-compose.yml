@@ -165,3 +165,10 @@ services:
     restart: always
     ports:
       - "80:80"
+
+  hmi:
+    build:
+      context: ./hmi-line
+    restart: always
+    ports:
+      - "5000:3000"
