@@ -111,60 +111,60 @@ services:
     ports:
       - "${ADMINER_PORT}:8080"
 
-  api:
-    build:
-      context: ./apiserver
-      dockerfile: dev.dockerfile
-    working_dir: /var/www
-    volumes:
-      - ./apiserver:/var/www
-    restart: always
+  # api:
+  #   build:
+  #     context: ./apiserver
+  #     dockerfile: dev.dockerfile
+  #   working_dir: /var/www
+  #   volumes:
+  #     - ./apiserver:/var/www
+  #   restart: always
 
-  web:
-    build:
-      context: ./
-      dockerfile: nginx-server.dockerfile
-    working_dir: /var/www
-    # volumes_from:
-    #   - api
-    ports:
-      - 8080:80
+  # web:
+  #   build:
+  #     context: ./
+  #     dockerfile: nginx-server.dockerfile
+  #   working_dir: /var/www
+  #   # volumes_from:
+  #   #   - api
+  #   ports:
+  #     - 8080:80
 
-  dbqc:
-    image: mariadb:10.4-bionic
-    volumes:
-      - dbdata:/var/lib/mysql
-    restart: always
-    environment:
-      - MYSQL_HOST=localhost
-      - MYSQL_PORT=3306
-      - MYSQL_ROOT_HOST=%
-      - MYSQL_DATABASE=qaqc
-      - MYSQL_PASSWORD=secret
-      - MYSQL_USER=homestead
-      - MYSQL_ROOT_PASSWORD=secret
+  # dbqc:
+  #   image: mariadb:10.4-bionic
+  #   volumes:
+  #     - dbdata:/var/lib/mysql
+  #   restart: always
+  #   environment:
+  #     - MYSQL_HOST=localhost
+  #     - MYSQL_PORT=3306
+  #     - MYSQL_ROOT_HOST=%
+  #     - MYSQL_DATABASE=qaqc
+  #     - MYSQL_PASSWORD=secret
+  #     - MYSQL_USER=homestead
+  #     - MYSQL_ROOT_PASSWORD=secret
 
-  mobile:
-    build:
-      context: ./mobilepage
-      dockerfile: mobile.dockerfile
-      args:
-        - NODE_ENV=production
-        - APISERVER_URL=http://${APISERVER_URL}:8080/
-    restart: always
-    ports:
-      - "8282:80"
+  # mobile:
+  #   build:
+  #     context: ./mobilepage
+  #     dockerfile: mobile.dockerfile
+  #     args:
+  #       - NODE_ENV=production
+  #       - APISERVER_URL=http://${APISERVER_URL}:8080/
+  #   restart: always
+  #   ports:
+  #     - "8282:80"
 
-  dashboard:
-    build:
-      context: ./webpage
-      dockerfile: web.dockerfile
-      args:
-        - NODE_ENV=production
-        - APISERVER_URL=http://${APISERVER_URL}:8080
-    restart: always
-    ports:
-      - "80:80"
+  # dashboard:
+  #   build:
+  #     context: ./webpage
+  #     dockerfile: web.dockerfile
+  #     args:
+  #       - NODE_ENV=production
+  #       - APISERVER_URL=http://${APISERVER_URL}:8080
+  #   restart: always
+  #   ports:
+  #     - "80:80"
 
   hmi:
     build:
